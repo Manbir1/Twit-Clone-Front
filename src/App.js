@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Signup from './Pages/SignUp'
+import Login from './Pages/Login'
+import Profile from './Pages/Profile.js'
+import NoMatch from './Pages/NoMatch';
+import { CssBaseline } from '@material-ui/core'
+import AuthContext from './Context/AuthContext'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 function App() {
+  const [auth, setAuth] = useState(false)
+  const providerValue = {
+    auth,
+    setAuth
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <CssBaseline />
+      <AuthContext.Provider value={providerValue}>
+        <Switch>
+            <Route exact path="/users/:handle" children={<Profile />} />
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+            <Route path="*">
+              <NoMatch />
+            </Route>
+          </Switch>
+        </AuthContext.Provider>
+    </Router>
   );
 }
 
