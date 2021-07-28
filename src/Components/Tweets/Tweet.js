@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles} from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import RepeatIcon from '@material-ui/icons/Repeat';
@@ -8,6 +9,9 @@ const useStyles = makeStyles({
     cardS: {
         maxWidth: "100%",
     },
+    rightAlign: {
+         
+    }
   });
 
 /* 
@@ -24,14 +28,45 @@ tweet = {
 
 */
 
-export default function Tweet({ tweet }) {
+export default function Tweet({ tweet, id, onDelete, liked = false}) {
     const classes = useStyles()
+
+    const onTweetDelete = async() => {
+        const ret = await fetch(`http://localhost:8000/tweet`,{
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({
+                tweetId: id
+            })
+        })
+
+        if(ret.status===200){
+            onDelete(id)
+        }
+    }
+
+    const onTweetLike = async() => {
+        const ret = await fetch(`http://localhost:8000/tweet/likes`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({
+                tweetId: id
+            })
+        })
+    }
 
     return (
             <Card className={classes.cardS} variant="outlined">
                 <CardHeader 
                     title = {tweet.name}
                     subheader = {'@'+tweet.username + ' ' + tweet.date}
+                    action={
+                        <IconButton aria-label="delete tweet">
+                          <DeleteIcon onClick={(e) => onTweetDelete()}/>
+                        </IconButton>
+                      }
                 />
                 <CardContent>
                     <Typography>
@@ -52,8 +87,8 @@ export default function Tweet({ tweet }) {
                     <Typography>
                         {tweet.shares}
                     </Typography>
-                    <IconButton>
-                        <FavoriteIcon />
+                    <IconButton onClick={(e) => onTweetLike()}>
+                        <FavoriteIcon color={liked ? "secondary" : ""}/>
                     </IconButton> 
                     <Typography>
                         {tweet.likes}
