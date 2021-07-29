@@ -5,7 +5,7 @@ export default function Feed({ tweetArr, setTweetArr}) {
 
     const changeOnDelete = (id) => {
         console.log("helo")
-        setTweetArr(tweetArr.filter(tweet => tweet.id!=id))
+        setTweetArr(tweetArr.filter(tweet => tweet.id!==id))
     }
 
     return (
@@ -16,8 +16,7 @@ export default function Feed({ tweetArr, setTweetArr}) {
                     id={tweet.id} 
                     tweet={tweet} 
                     onDelete={changeOnDelete}
-                    liked={true}
-                    />
+                />
             ))}
         </>
     )

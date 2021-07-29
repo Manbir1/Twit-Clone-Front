@@ -11,6 +11,8 @@ import {
   Route,
 } from "react-router-dom";
 
+import EditProfile from './Components/Profile/EditProfile';
+
 function App() {
   const [auth, setAuth] = useState(false)
   const providerValue = {
@@ -30,7 +32,7 @@ function App() {
               <Signup />
             </Route>
             <Route path="*">
-              <NoMatch />
+              <EditProfile />
             </Route>
           </Switch>
         </AuthContext.Provider>

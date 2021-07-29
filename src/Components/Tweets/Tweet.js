@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import RepeatIcon from '@material-ui/icons/Repeat';
+import AuthContext from '../../Context/AuthContext';
 
 const useStyles = makeStyles({
     cardS: {
@@ -30,6 +31,7 @@ tweet = {
 
 export default function Tweet({ tweet, id, onDelete, liked = false}) {
     const classes = useStyles()
+    const { auth } = useContext(AuthContext)
 
     const onTweetDelete = async() => {
         const ret = await fetch(`http://localhost:8000/tweet`,{
@@ -63,9 +65,11 @@ export default function Tweet({ tweet, id, onDelete, liked = false}) {
                     title = {tweet.name}
                     subheader = {'@'+tweet.username + ' ' + tweet.date}
                     action={
+                        auth && (
                         <IconButton aria-label="delete tweet">
                           <DeleteIcon onClick={(e) => onTweetDelete()}/>
                         </IconButton>
+                        )
                       }
                 />
                 <CardContent>

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react'
-import LoginForm from '../Components/LoginForm'
+import LoginForm from '../Components/Forms/LoginForm'
 import { useHistory } from 'react-router';
 import AuthContext from '../Context/AuthContext';
 import isAuth from '../utils/useAuth';
