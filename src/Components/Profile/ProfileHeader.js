@@ -1,6 +1,7 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { Avatar, Paper, Grid, Typography, Button, Box, makeStyles} from '@material-ui/core'
 import AuthContext from '../../Context/AuthContext'
+import EditProfile from './EditProfile';
 
 const useStyles = makeStyles({
     onHover: {
@@ -13,8 +14,11 @@ const useStyles = makeStyles({
 export default function ProfileHeader({name, username, avatar, description, followers, following, followOnClick}) {
     const { auth } = useContext(AuthContext)
     const classes = useStyles()
+    const [openEdit, setEdit] = useState(false)
+
     return (
         <Paper variant="outlined" elevation={0} xs={12}>
+            <EditProfile open={openEdit} setOpen={setEdit} name={name} username={username} description={description}/>
             <Box m={3}>
                 <Grid container direction="column" >
                     <Grid container direction="row" justifyContent="space-between">
@@ -25,7 +29,7 @@ export default function ProfileHeader({name, username, avatar, description, foll
                             {auth && 
                             <>
                                 <Button variant="outlined" color="primary" onClick={followOnClick}>Follow</Button>
-                                <Button variant="outlined" color="primary">Edit Profile</Button>
+                                <Button variant="outlined" color="primary" onClick={(e) => setEdit(true)}>Edit Profile</Button>
                             </>
                             }
                         </Grid>
