@@ -8,9 +8,14 @@ import AuthContext from '../Context/AuthContext'
 import CreateTweet from '../Components/Tweets/CreateTweet'
 import isAuth from '../utils/useAuth'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
     root: {
-        maxWidth: "50%"
+        [theme.breakpoints.up('sm')]: {
+            maxWidth: "75%",
+        },
+        [theme.breakpoints.up('md')]: {
+            maxWidth: "50%",
+        }
     },
     loading: {
         display: "flex",
@@ -19,7 +24,7 @@ const useStyles = makeStyles({
         minHeight: "80vh",
         margin: "auto"
     }
-});
+}));
 
 const followOnClick = () => {
 
@@ -55,6 +60,26 @@ export default function Profile() {
         setTweetArr([res,...tweetArr])
 
         updateContent('')
+    }
+
+    const editProfileAPI = async(name, username, description) => {
+        await fetch('http://localhost:8000/users',{
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({
+                username: username,
+                name: name,
+                description: description
+            })
+        })
+
+        if(username == user.username){
+            history.go(0)
+        }
+        else{
+            history.push(`/users/${username}`)
+        }
     }
 
 
@@ -102,6 +127,7 @@ export default function Profile() {
                     followers={user.followers}
                     following={user.following}
                     followOnClick={followOnClick}
+                    editProfileAPI={editProfileAPI}
                     />
                 {auth && <CreateTweet 
                     content={content} 

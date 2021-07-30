@@ -11,14 +11,14 @@ const useStyles = makeStyles({
     }
 });
 
-export default function ProfileHeader({name, username, avatar, description, followers, following, followOnClick}) {
+export default function ProfileHeader({name, username, avatar, description, followers, following, followOnClick, editProfileAPI}) {
     const { auth } = useContext(AuthContext)
     const classes = useStyles()
     const [openEdit, setEdit] = useState(false)
 
     return (
-        <Paper variant="outlined" elevation={0} xs={12}>
-            <EditProfile open={openEdit} setOpen={setEdit} name={name} username={username} description={description}/>
+        <Paper variant="outlined" elevation={0} xs={12} square={true}>
+            <EditProfile open={openEdit} setOpen={setEdit} name={name} username={username} description={description} editProfileAPI={editProfileAPI}/>
             <Box m={3}>
                 <Grid container direction="column" >
                     <Grid container direction="row" justifyContent="space-between">

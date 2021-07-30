@@ -32,7 +32,7 @@ function App() {
               <Signup />
             </Route>
             <Route path="*">
-              <EditProfile />
+              <NoMatch />
             </Route>
           </Switch>
         </AuthContext.Provider>

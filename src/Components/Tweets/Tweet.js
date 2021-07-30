@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles} from '@material-ui/core'
+import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles, Box, Grid} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
@@ -10,8 +10,10 @@ const useStyles = makeStyles({
     cardS: {
         maxWidth: "100%",
     },
-    rightAlign: {
-         
+    item: {
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
     }
   });
 
@@ -57,47 +59,64 @@ export default function Tweet({ tweet, id, onDelete, liked = false}) {
                 tweetId: id
             })
         })
+
+        const like = (await ret.json()).like
     }
 
     return (
-            <Card className={classes.cardS} variant="outlined">
-                <CardHeader 
-                    title = {tweet.name}
-                    subheader = {'@'+tweet.username + ' ' + tweet.date}
-                    action={
-                        auth && (
-                        <IconButton aria-label="delete tweet">
-                          <DeleteIcon onClick={(e) => onTweetDelete()}/>
-                        </IconButton>
-                        )
-                      }
-                />
-                <CardContent>
-                    <Typography>
-                        {tweet.content}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <IconButton>
-                        <ChatBubbleIcon /> 
-                    </IconButton>
-                    <Typography>
-                        {tweet.comments}
-                    </Typography>
+            <Card className={classes.cardS} variant="outlined" elevation={3} square={true}>
+                <Box p={1}>
+                    <CardHeader 
+                        title = {tweet.name}
+                        titleTypographyProps={{variant:'title' }}
+                        subheader = {'@'+tweet.username + ' ' + tweet.date}
+                        action={
+                            auth && (
+                            <IconButton aria-label="delete tweet">
+                            <DeleteIcon onClick={(e) => onTweetDelete()}/>
+                            </IconButton>
+                            )
+                        }
+                    />
+                    <CardContent>
+                        <Typography>
+                            {tweet.content}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="space-around"
+                        >
+                            <Grid className={classes.item}>
+                                <IconButton>
+                                    <ChatBubbleIcon /> 
+                                </IconButton>
+                                <Typography>
+                                    {tweet.comments}
+                                </Typography>
+                            </Grid>
 
-                    <IconButton>
-                        <RepeatIcon />
-                    </IconButton>
-                    <Typography>
-                        {tweet.shares}
-                    </Typography>
-                    <IconButton onClick={(e) => onTweetLike()}>
-                        <FavoriteIcon color={liked ? "secondary" : ""}/>
-                    </IconButton> 
-                    <Typography>
-                        {tweet.likes}
-                    </Typography>
-                </CardActions>
+                            <Grid className={classes.item}>
+                                <IconButton>
+                                    <RepeatIcon />
+                                </IconButton>
+                                <Typography>
+                                    {tweet.shares}
+                                </Typography>
+                            </Grid>
+                            <Grid className={classes.item}>
+                                <IconButton onClick={(e) => onTweetLike()}>
+                                    <FavoriteIcon color={liked ? "secondary" : ""}/>
+                                </IconButton> 
+                                <Typography>
+                                    {tweet.likes}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </CardActions>
+                </Box>
             </Card>
     )
 }

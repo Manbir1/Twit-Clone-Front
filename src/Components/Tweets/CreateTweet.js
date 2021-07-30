@@ -17,7 +17,7 @@ export default function CreateTweet({content, updateContent, createTweetAPI}) {
     const classes = useStyles()
 
     return (
-        <Paper variant="outlined" elevation={0} xs={12} className={classes.root}>
+        <Paper variant="outlined" square={true} elevation={0} xs={12} className={classes.root}>
                 <Grid
                     container
                     direction="column"
