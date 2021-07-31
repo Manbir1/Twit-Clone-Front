@@ -27,7 +27,7 @@ export default function Signup() {
 
         const body = await ret.json()
         if(body.userCreate){
-            history.push('/')
+            history.push('/users/'+username)
         }
     }
     

@@ -9,6 +9,10 @@ import AuthContext from '../../Context/AuthContext';
 const useStyles = makeStyles({
     cardS: {
         maxWidth: "100%",
+        '&:hover': {
+            background: "#FAFAFA",
+            cursor: "pointer"
+         },
     },
     item: {
         display: 'flex',

@@ -4,6 +4,7 @@ import Login from './Pages/Login'
 import Profile from './Pages/Profile.js'
 import NoMatch from './Pages/NoMatch';
 import { CssBaseline } from '@material-ui/core'
+import FollowContainer from './Components/FollowContainer';
 import AuthContext from './Context/AuthContext'
 import {
   BrowserRouter as Router,
@@ -24,7 +25,7 @@ function App() {
       <CssBaseline />
       <AuthContext.Provider value={providerValue}>
         <Switch>
-            <Route exact path="/users/:handle" children={<Profile />} />
+            <Route path="/users/:handle" children={<Profile />} />
             <Route exact path="/login">
               <Login />
             </Route>

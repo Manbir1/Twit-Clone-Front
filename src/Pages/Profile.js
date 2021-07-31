@@ -2,11 +2,14 @@ import React, {useEffect, useState, useContext} from 'react'
 import ProfileHeader from '../Components/Profile/ProfileHeader'
 import Feed from '../Components/Feed'
 import Navbar from '../Components/Navbar'
-import { Grid, makeStyles, Container, CircularProgress } from '@material-ui/core'
+import { Grid, makeStyles, Container } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router'
 import AuthContext from '../Context/AuthContext'
 import CreateTweet from '../Components/Tweets/CreateTweet'
 import isAuth from '../utils/useAuth'
+import { Switch, Route, useRouteMatch } from 'react-router'
+import FollowContainer from '../Components/FollowContainer'
+import CircularLoad from '../Components/CircularLoad'
 
 const useStyles = makeStyles( theme => ({
     root: {
@@ -16,19 +19,8 @@ const useStyles = makeStyles( theme => ({
         [theme.breakpoints.up('md')]: {
             maxWidth: "50%",
         }
-    },
-    loading: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        minHeight: "80vh",
-        margin: "auto"
     }
 }));
-
-const followOnClick = () => {
-
-}
 
 export default function Profile() {
     const classes = useStyles()
@@ -38,6 +30,7 @@ export default function Profile() {
     const [content, updateContent] = useState('')
     const { handle } = useParams()
     const {auth, setAuth} = useContext(AuthContext)
+    let { path } = useRouteMatch();
 
 
     const createTweetAPI = async (e, content, updateContent) => {
@@ -114,9 +107,11 @@ export default function Profile() {
         })()
     }, [handle,history, auth, setAuth])
 
+    console.log(path)
+
     return (
     <>
-    {user == null ? <CircularProgress className={classes.loading}/> : 
+    {user == null ? <CircularLoad/> : 
             (<Container className={classes.root}>
             <Grid container direction="column" spacing={0} >
                 <Navbar />
@@ -126,18 +121,24 @@ export default function Profile() {
                     description={user.description}
                     followers={user.followers}
                     following={user.following}
-                    followOnClick={followOnClick}
                     editProfileAPI={editProfileAPI}
-                    />
-                {auth && <CreateTweet 
-                    content={content} 
-                    updateContent={updateContent}
-                    createTweetAPI={createTweetAPI}
-                    />}
-                <Feed 
-                    tweetArr={tweetArr}
-                    setTweetArr={setTweetArr}
-                    />
+                />
+                <Switch>
+                    <Route exact path={path}>
+                        {auth && <CreateTweet 
+                            content={content} 
+                            updateContent={updateContent}
+                            createTweetAPI={createTweetAPI}
+                            />}
+                        <Feed 
+                            tweetArr={tweetArr}
+                            setTweetArr={setTweetArr}
+                        />
+                    </Route>
+                    <Route exact path={`${path}/:type`}>
+                        <FollowContainer userForContainer={user.username}/>
+                    </Route>
+                </Switch>
             </Grid>
         </Container >)}
     </>
