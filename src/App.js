@@ -4,16 +4,12 @@ import Login from './Pages/Login'
 import Profile from './Pages/Profile.js'
 import NoMatch from './Pages/NoMatch';
 import { CssBaseline } from '@material-ui/core'
-import FollowContainer from './Components/FollowContainer';
 import AuthContext from './Context/AuthContext'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-
-import EditProfile from './Components/Profile/EditProfile';
-
 function App() {
   const [auth, setAuth] = useState(false)
   const providerValue = {

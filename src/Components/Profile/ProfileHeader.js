@@ -20,6 +20,14 @@ export default function ProfileHeader({name, username, avatar, description, foll
     const { url } = useRouteMatch()
     const history = useHistory()
 
+    const onSignout = async (e) => {
+        await fetch(`http://localhost:8000/users/action/signout`,{
+                method: 'GET',
+                credentials: 'include',
+        })
+        history.push('/login')
+    }
+
     return (
         <Paper variant="outlined" elevation={0} xs={12} square={true}>
             <EditProfile open={openEdit} setOpen={setEdit} name={name} username={username} description={description} editProfileAPI={editProfileAPI}/>
@@ -34,6 +42,7 @@ export default function ProfileHeader({name, username, avatar, description, foll
                             <>
                                 <FollowButton username={username}/>
                                 <Button variant="outlined" color="primary" onClick={(e) => setEdit(true)}>Edit Profile</Button>
+                                <Button variant="outlined" color="secondary" onClick={onSignout}>Sign Out</Button>
                             </>
                             }
                         </Grid>

@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   });
 
 
-export default function CreateTweet({content, updateContent, createTweetAPI}) {
+export default function CreateTweet({content, updateContent, createTweetAPI, buttonText="tweet", labelValue="Tweet", placeholderValue="What's happening?"}) {
     const classes = useStyles()
 
     return (
@@ -27,11 +27,11 @@ export default function CreateTweet({content, updateContent, createTweetAPI}) {
                 >
                     <Grid item className={classes.root}>
                         <TextField
-                            label="Tweet"
+                            label={labelValue}
                             multiline
                             fullWidth
                             onChange={(e) => updateContent(e.target.value)}
-                            placeholder="What's happening?"
+                            placeholder={placeholderValue}
                             value={content}
                         />
                     </Grid>
@@ -48,7 +48,7 @@ export default function CreateTweet({content, updateContent, createTweetAPI}) {
                                     color="primary"
                                     onClick = { (e) => createTweetAPI(e, content, updateContent)}
                                 >
-                                    Tweet
+                                    {buttonText}
                                 </Button>
                             </Grid>
                         </Grid>

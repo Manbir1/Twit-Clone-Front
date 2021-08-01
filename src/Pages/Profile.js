@@ -10,6 +10,7 @@ import isAuth from '../utils/useAuth'
 import { Switch, Route, useRouteMatch } from 'react-router'
 import FollowContainer from '../Components/FollowContainer'
 import CircularLoad from '../Components/CircularLoad'
+import TweetPage from './TweetPage'
 
 const useStyles = makeStyles( theme => ({
     root: {
@@ -47,11 +48,8 @@ export default function Profile() {
         })
 
         const res = await resJSON.json()
-        res.username = user.username
-        res.name = user.name
-
+        
         setTweetArr([res,...tweetArr])
-
         updateContent('')
     }
 
@@ -67,7 +65,7 @@ export default function Profile() {
             })
         })
 
-        if(username == user.username){
+        if(username === user.username){
             history.go(0)
         }
         else{
@@ -106,9 +104,7 @@ export default function Profile() {
             setTweetArr(tweets)
         })()
     }, [handle,history, auth, setAuth])
-
-    console.log(path)
-
+    
     return (
     <>
     {user == null ? <CircularLoad/> : 
@@ -134,6 +130,9 @@ export default function Profile() {
                             tweetArr={tweetArr}
                             setTweetArr={setTweetArr}
                         />
+                    </Route>
+                    <Route exact path={`${path}/status/:tweet_id`}>
+                        <TweetPage />
                     </Route>
                     <Route exact path={`${path}/:type`}>
                         <FollowContainer userForContainer={user.username}/>

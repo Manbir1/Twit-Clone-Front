@@ -54,7 +54,7 @@ export default function FollowContainer( {userForContainer} ) {
         <>
             { arr==null 
             ? <CircularLoad />
-            : arr.map(user => <Follow user={user}/>)
+            : arr.map(user => <Follow key = {user.id} user={user}/>)
             }
         </>
     )
