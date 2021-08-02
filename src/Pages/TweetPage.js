@@ -56,7 +56,7 @@ export default function TweetPage() {
 
     return(
         <div>
-            <Tweet tweet={INF.tweet}/>
+            <Tweet tweet={INF.tweet} id={INF.tweet.id}/>
             { auth && <CreateTweet 
                 createTweetAPI={onCommentCreate} 
                 content={commentContent} 

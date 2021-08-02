@@ -7,6 +7,7 @@ export default function Feed({ tweetArr, setTweetArr}) {
         setTweetArr(tweetArr.filter(tweet => tweet.id!==id))
     }
 
+
     return (
         <>
             {tweetArr.map(tweet => (

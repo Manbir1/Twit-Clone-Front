@@ -3,11 +3,13 @@ import SignUpForm from '../Components/Forms/SignUpForm'
 import AuthContext from '../Context/AuthContext'
 import { useHistory } from 'react-router'
 import isAuth from '../utils/useAuth'
+import UserContext from '../Context/UserContext'
 
 
 
 export default function Signup() {
     const {auth, setAuth} = useContext(AuthContext)
+    const { setUser } = useContext(UserContext)
     const history = useHistory()
     const onSubmit = async (e, name, username, email, password) => {
         // API call to backend to create user
@@ -33,7 +35,7 @@ export default function Signup() {
     
     useEffect(function handleAuth(){
         (async () => {
-            const obj = await isAuth(auth, setAuth)
+            const obj = await isAuth(auth, setAuth, setUser)
             if(obj.auth){
                 history.push('/users/'+obj.username)
             }

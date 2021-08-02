@@ -11,6 +11,7 @@ import { Switch, Route, useRouteMatch } from 'react-router'
 import FollowContainer from '../Components/FollowContainer'
 import CircularLoad from '../Components/CircularLoad'
 import TweetPage from './TweetPage'
+import UserContext from '../Context/UserContext'
 
 const useStyles = makeStyles( theme => ({
     root: {
@@ -31,6 +32,7 @@ export default function Profile() {
     const [content, updateContent] = useState('')
     const { handle } = useParams()
     const {auth, setAuth} = useContext(AuthContext)
+    const sessionUserObj = useContext(UserContext)
     let { path } = useRouteMatch();
 
 
@@ -48,7 +50,7 @@ export default function Profile() {
         })
 
         const res = await resJSON.json()
-        
+
         setTweetArr([res,...tweetArr])
         updateContent('')
     }
@@ -76,7 +78,7 @@ export default function Profile() {
 
     useEffect(function handleApi(){
         (async () => {
-            isAuth(auth,setAuth)
+            isAuth(auth,setAuth, sessionUserObj.setUser)
             const ret = await fetch(`http://localhost:8000/users/profile/${handle}/header`,{
                 method: 'GET',
                 credentials: 'include',

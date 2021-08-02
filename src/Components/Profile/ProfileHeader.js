@@ -4,6 +4,7 @@ import AuthContext from '../../Context/AuthContext'
 import EditProfile from './EditProfile';
 import FollowButton from '../FollowButton';
 import { useHistory, useRouteMatch } from 'react-router';
+import UserContext from '../../Context/UserContext';
 
 const useStyles = makeStyles({
     onHover: {
@@ -15,6 +16,7 @@ const useStyles = makeStyles({
 
 export default function ProfileHeader({name, username, avatar, description, followers, following, editProfileAPI}) {
     const { auth } = useContext(AuthContext)
+    const sessionUser = useContext(UserContext).user
     const classes = useStyles()
     const [openEdit, setEdit] = useState(false)
     const { url } = useRouteMatch()
@@ -28,20 +30,27 @@ export default function ProfileHeader({name, username, avatar, description, foll
         history.push('/login')
     }
 
+    const onProfileClick = async(e) => {
+        e.stopPropagation()
+        history.push(`/users/${username}`)
+    }
+
     return (
         <Paper variant="outlined" elevation={0} xs={12} square={true}>
             <EditProfile open={openEdit} setOpen={setEdit} name={name} username={username} description={description} editProfileAPI={editProfileAPI}/>
             <Box m={3}>
                 <Grid container direction="column" >
                     <Grid container direction="row" justifyContent="space-between">
-                        <Grid>
+                        <Grid className={classes.onHover} onClick={onProfileClick}>
                             <Avatar>H</Avatar>
                         </Grid>
                         <Grid>
                             {auth && 
                             <>
-                                <FollowButton username={username}/>
-                                <Button variant="outlined" color="primary" onClick={(e) => setEdit(true)}>Edit Profile</Button>
+                                { sessionUser != username
+                                    ?<FollowButton username={username}/>
+                                    :<Button variant="outlined" color="primary" onClick={(e) => setEdit(true)}>Edit Profile</Button>
+                                }
                                 <Button variant="outlined" color="secondary" onClick={onSignout}>Sign Out</Button>
                             </>
                             }
@@ -51,7 +60,7 @@ export default function ProfileHeader({name, username, avatar, description, foll
                         <Typography>
                             {name}
                         </Typography>
-                        <Typography variant="body1" color="textSecondary" >
+                        <Typography variant="body1" color="textSecondary"className={classes.onHover} onClick={onProfileClick}>
                             {'@'+username}
                         </Typography>
                     </Grid>

@@ -1,11 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles, Box, Grid} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import AuthContext from '../../Context/AuthContext';
 import { useHistory } from 'react-router-dom';
+import UserContext from '../../Context/UserContext';
 
 const useStyles = makeStyles({
     cardS: {
@@ -36,10 +38,15 @@ tweet = {
 
 */
 
-export default function Tweet({ tweet, id, onDelete = null, liked = false }) {
+export default function Tweet({ tweet, id, onDelete = null, likedProp = false}) {
     const classes = useStyles()
     const { auth } = useContext(AuthContext)
+    const { user } = useContext(UserContext)
     const history = useHistory()
+    const [liked, setLiked] = useState(likedProp)
+    const [likes, setLikes] = useState(tweet.likes)
+
+
 
     const onTweetDelete = async(e) => {
         e.stopPropagation()
@@ -68,11 +75,13 @@ export default function Tweet({ tweet, id, onDelete = null, liked = false }) {
             })
         })
 
-        const like = (await ret.json()).like
+        const likeRes = (await ret.json()).like
+        likeRes ? setLikes(Number(likes)+1) : setLikes(Number(likes)-1)
+        setLiked(likeRes)
     }
 
     const onTweetClick = async() => {
-        history.push(`${tweet.username}/status/${id}`)
+        history.push(`/users/${tweet.username}/status/${id}`)
     }
 
     return (
@@ -83,7 +92,7 @@ export default function Tweet({ tweet, id, onDelete = null, liked = false }) {
                         titleTypographyProps={{variant:'title' }}
                         subheader = {'@'+tweet.username + ' ' + tweet.date}
                         action={
-                            auth && (
+                             user==tweet.username && auth && (
                             <IconButton aria-label="delete tweet">
                             <DeleteIcon onClick={(e) => onTweetDelete(e)}/>
                             </IconButton>
@@ -112,7 +121,7 @@ export default function Tweet({ tweet, id, onDelete = null, liked = false }) {
 
                             <Grid className={classes.item}>
                                 <IconButton>
-                                    <RepeatIcon />
+                                    <RepeatIcon color={"success"}/>
                                 </IconButton>
                                 <Typography>
                                     {tweet.shares}
@@ -120,10 +129,10 @@ export default function Tweet({ tweet, id, onDelete = null, liked = false }) {
                             </Grid>
                             <Grid className={classes.item}>
                                 <IconButton onClick={(e) => onTweetLike(e)}>
-                                    <FavoriteIcon color={liked ? "secondary" : ""}/>
+                                    { liked ? <FavoriteIcon color={liked ? "secondary" : ""}/> : <FavoriteBorderIcon />}
                                 </IconButton> 
                                 <Typography>
-                                    {tweet.likes}
+                                    {likes}
                                 </Typography>
                             </Grid>
                         </Grid>

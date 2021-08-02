@@ -1,4 +1,4 @@
-export default async function isAuth(auth, setAuth) {
+export default async function isAuth(auth, setAuth, setUser) {
     if(auth){
         return true
     }
@@ -9,6 +9,7 @@ export default async function isAuth(auth, setAuth) {
 
     const currAuth = await res.json()
     setAuth(currAuth.auth)
+    setUser(currAuth.username)
 
     return { 
         auth: currAuth.auth,
