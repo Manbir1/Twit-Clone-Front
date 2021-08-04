@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles, Box, Grid} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -38,7 +38,7 @@ tweet = {
 
 */
 
-export default function Tweet({ tweet, id, onDelete = null, likedProp = false}) {
+export default function Tweet({ tweet, id, onDelete = null, likedProp = false, sharedProp = false}) {
     const classes = useStyles()
     const { auth } = useContext(AuthContext)
     const { user } = useContext(UserContext)
@@ -46,7 +46,19 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false}) 
     const [liked, setLiked] = useState(likedProp)
     const [likes, setLikes] = useState(tweet.likes)
 
-
+    useEffect(function getLikeSession(){
+        (async() => {
+            const obj = await (await fetch(`http://localhost:8000/tweet/is_liked`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify({
+                    tweet_id: id
+                })
+            })).json()
+            setLiked(obj.status)
+        })()
+    },[])
 
     const onTweetDelete = async(e) => {
         e.stopPropagation()
@@ -78,6 +90,20 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false}) 
         const likeRes = (await ret.json()).like
         likeRes ? setLikes(Number(likes)+1) : setLikes(Number(likes)-1)
         setLiked(likeRes)
+    }
+
+    const onTweetShare = async(e) => {
+        e.stopPropagation()
+        const ret = await fetch(`http://localhost:8000/tweet/share`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({
+                tweet_id: id
+            })
+        })
+
+        const share = (await ret.json()).share 
     }
 
     const onTweetClick = async() => {
@@ -121,7 +147,7 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false}) 
 
                             <Grid className={classes.item}>
                                 <IconButton>
-                                    <RepeatIcon color={"success"}/>
+                                    <RepeatIcon onClick={onTweetShare}/>
                                 </IconButton>
                                 <Typography>
                                     {tweet.shares}

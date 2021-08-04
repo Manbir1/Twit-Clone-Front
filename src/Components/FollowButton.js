@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button } from '@material-ui/core'
 
-export default function FollowButton( { username, follow } ) {
+export default function FollowButton( { username, follow=false } ) {
 
     const [followState, updateFollow] = useState(follow)
 

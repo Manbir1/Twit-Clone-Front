@@ -98,11 +98,6 @@ export default function Profile() {
                 credentials: 'include',
             })).json()
 
-            for(let i = 0;i<tweets.length;i++){
-                tweets[i].username = userResponse.username
-                tweets[i].name = userResponse.name
-            }
-
             setTweetArr(tweets)
         })()
     }, [handle,history, auth, setAuth])
@@ -119,6 +114,7 @@ export default function Profile() {
                     description={user.description}
                     followers={user.followers}
                     following={user.following}
+                    followStatus={user.followStatus}
                     editProfileAPI={editProfileAPI}
                 />
                 <Switch>

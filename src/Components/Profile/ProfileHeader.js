@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function ProfileHeader({name, username, avatar, description, followers, following, editProfileAPI}) {
+export default function ProfileHeader({name, username, avatar, description, followers, following, editProfileAPI, followStatus}) {
     const { auth } = useContext(AuthContext)
     const sessionUser = useContext(UserContext).user
     const classes = useStyles()
@@ -35,6 +35,8 @@ export default function ProfileHeader({name, username, avatar, description, foll
         history.push(`/users/${username}`)
     }
 
+    console.log(followStatus)
+
     return (
         <Paper variant="outlined" elevation={0} xs={12} square={true}>
             <EditProfile open={openEdit} setOpen={setEdit} name={name} username={username} description={description} editProfileAPI={editProfileAPI}/>
@@ -48,7 +50,7 @@ export default function ProfileHeader({name, username, avatar, description, foll
                             {auth && 
                             <>
                                 { sessionUser != username
-                                    ?<FollowButton username={username}/>
+                                    ?<FollowButton username={username} follow={followStatus}/>
                                     :<Button variant="outlined" color="primary" onClick={(e) => setEdit(true)}>Edit Profile</Button>
                                 }
                                 <Button variant="outlined" color="secondary" onClick={onSignout}>Sign Out</Button>

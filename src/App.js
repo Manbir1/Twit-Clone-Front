@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Signup from './Pages/SignUp'
+import Home from './Pages/Home';
 import Login from './Pages/Login'
 import Profile from './Pages/Profile.js'
 import NoMatch from './Pages/NoMatch';
@@ -38,7 +39,7 @@ function App() {
                 <Signup />
               </Route>
               <Route path="*">
-                <NoMatch />
+                <Home />
               </Route>
             </Switch>
           </UserContext.Provider>
