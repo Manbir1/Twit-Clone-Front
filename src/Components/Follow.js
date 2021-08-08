@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   });
 
 
-export default function Follow({ user }) {
+export default function Follow({ user, size=1}) {
 
     const history = useHistory()
     const classes = useStyles()
@@ -33,7 +33,7 @@ export default function Follow({ user }) {
             >
             <Grid container direction="row">
                 <Grid>
-                    <Box m={1}><Avatar>H</Avatar></Box>
+                    <Box m={1}><Avatar></Avatar></Box>
                 </Grid>
                 <Grid>
                     <Box m={1}>
@@ -44,9 +44,9 @@ export default function Follow({ user }) {
                 <Grid className={classes.pushRight}>
                     <Box m={1}><FollowButton username={user.username} follow={user.follow}/></Box>
                 </Grid>
-                <Grid item xs={12}>
+                {size==1 ? <Grid item xs={12}>
                     <Typography variant="body2">{user.description}</Typography>
-                </Grid>
+                </Grid> : <></>}
             </Grid>
         </Paper>
     )

@@ -1,10 +1,17 @@
 import React from 'react'
-import { TextField } from '@material-ui/core'
+import { TextField, Box, makeStyles} from '@material-ui/core'
+
+const useStyles = makeStyles({
+    search: {
+        borderRadius: "20px"
+    }
+})
 
 export default function SearchBar() {
+    const classes = useStyles()
     return (
-        <div>
-            <TextField variant="filled"/>
-        </div>
+        <Box>
+            <TextField />
+        </Box>
     )
 }

@@ -22,10 +22,10 @@ export default function Home() {
 
     return(
     <Grid container>
-        <Grid item xs={0} md={3}>
+        <Grid item xs={0} sm={3}>
             <SideBar />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} sm={6}>
             <CreateTweet />
             {
                 tweetArr==null
@@ -34,7 +34,7 @@ export default function Home() {
 
             }
         </Grid>
-        <Grid item xs={0} md={3}>
+        <Grid item xs={0} sm={3}>
 
         </Grid>
     </Grid>

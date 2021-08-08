@@ -2,12 +2,13 @@ import React, {useEffect, useState, useContext} from 'react'
 import ProfileHeader from '../Components/Profile/ProfileHeader'
 import Feed from '../Components/Feed'
 import Navbar from '../Components/Navbar'
-import { Grid, makeStyles, Container} from '@material-ui/core'
+import { Grid, makeStyles, Container, Hidden} from '@material-ui/core'
 import { useHistory, useParams } from 'react-router'
 import AuthContext from '../Context/AuthContext'
 import CreateTweet from '../Components/Tweets/CreateTweet'
 import isAuth from '../utils/useAuth'
 import { Switch, Route, useRouteMatch } from 'react-router'
+import UtilsBar from '../Components/Sidebars/UtilsBar'
 import FollowContainer from '../Components/FollowContainer'
 import CircularLoad from '../Components/Utils/CircularLoad'
 import TweetPage from './TweetPage'
@@ -104,10 +105,12 @@ export default function Profile() {
             (
         <>
         <Grid container>
-            <Grid item xs={0} md={3}>
-                <SideBar />
+            <Grid item xs={0} sm={3}>
+                <Hidden xsDown>
+                    <SideBar />
+                </Hidden>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
                 <Container className={classes.root}>
                     <Grid container direction="column" spacing={0} >
                         <Navbar />
@@ -142,8 +145,8 @@ export default function Profile() {
                     </Grid>
                 </Container > 
             </Grid>
-            <Grid item xs={0} md={3}>
-                
+            <Grid item xs={0} sm={3}>
+                <UtilsBar />
             </Grid>
         </Grid>
         </>)}

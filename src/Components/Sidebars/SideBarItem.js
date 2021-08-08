@@ -6,13 +6,16 @@ const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(1),
     },
+    text: {
+      fontSize: 24
+    }
   }));
 
-export default function SideBarItem({ text, icon }) {
+export default function SideBarItem({ text, icon, action }) {
     const classes = useStyles()
     return (
-        <div style={{marginTop: "20px"}}>
-            <Button startIcon={<SettingsIcon />} className={classes.button}><Typography variant="body1">{text}</Typography></Button>
+        <div style={{display: "inline-block",marginTop: "20px"}}>
+            <Button startIcon={icon} className={classes.button}><Typography className={classes.text} variant="body1">{text}</Typography></Button>
         </div>
     )
 }
