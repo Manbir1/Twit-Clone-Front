@@ -27,7 +27,6 @@ function App() {
 
   return (
     <Router>
-      <CssBaseline />
       <AuthContext.Provider value={providerValue}>
         <UserContext.Provider value={userProviderValue}>
           <Switch>
@@ -42,6 +41,7 @@ function App() {
                 <Home />
               </Route>
             </Switch>
+
           </UserContext.Provider>
         </AuthContext.Provider>
     </Router>

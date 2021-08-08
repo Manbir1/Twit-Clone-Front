@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext} from 'react'
 import { useParams } from 'react-router';
 import Tweet from '../Components/Tweets/Tweet';
-import CircularLoad from '../Components/CircularLoad';
+import CircularLoad from '../Components/Utils/CircularLoad';
 import Feed from '../Components/Feed';
 import CreateTweet from '../Components/Tweets/CreateTweet';
 import AuthContext from '../Context/AuthContext';

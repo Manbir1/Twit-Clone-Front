@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles, Box, Grid} from '@material-ui/core'
+import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles, Box, Grid, Avatar} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -117,6 +117,7 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                         title = {tweet.name}
                         titleTypographyProps={{variant:'title' }}
                         subheader = {'@'+tweet.username + ' ' + tweet.date}
+                        avatar={<Avatar></Avatar>}
                         action={
                              user==tweet.username && auth && (
                             <IconButton aria-label="delete tweet">
@@ -138,7 +139,7 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                         >
                             <Grid className={classes.item}>
                                 <IconButton>
-                                    <ChatBubbleIcon /> 
+                                    <ChatBubbleIcon fontSize="small"/> 
                                 </IconButton>
                                 <Typography>
                                     {tweet.comments}
@@ -147,7 +148,7 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
 
                             <Grid className={classes.item}>
                                 <IconButton>
-                                    <RepeatIcon onClick={onTweetShare}/>
+                                    <RepeatIcon fontSize="small" onClick={onTweetShare}/>
                                 </IconButton>
                                 <Typography>
                                     {tweet.shares}
@@ -155,7 +156,7 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                             </Grid>
                             <Grid className={classes.item}>
                                 <IconButton onClick={(e) => onTweetLike(e)}>
-                                    { liked ? <FavoriteIcon color={liked ? "secondary" : ""}/> : <FavoriteBorderIcon />}
+                                    { liked ? <FavoriteIcon fontSize="small" color={liked ? "secondary" : ""}/> : <FavoriteBorderIcon fontSize="small" />}
                                 </IconButton> 
                                 <Typography>
                                     {likes}

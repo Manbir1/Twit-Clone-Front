@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
-import { Button } from '@material-ui/core'
+import React, { useState} from 'react'
+import { Button, makeStyles} from '@material-ui/core'
+
+const useStyles = makeStyles({
+    followBtn:{
+        borderRadius: "20px"
+    }
+});
+
 
 export default function FollowButton( { username, follow=false } ) {
 
+    const classes = useStyles()
     const [followState, updateFollow] = useState(follow)
 
     const followOnClick = async(e) =>
@@ -23,6 +31,14 @@ export default function FollowButton( { username, follow=false } ) {
     }
 
     return (
-        <Button variant="outlined" color={!followState ? "primary" : "secondary"} onClick={followOnClick}>{!followState ? "Follow" : "Unfollow" }</Button>
+        <Button 
+            variant="outlined" 
+            color={!followState ? "primary" : "secondary"} 
+            onClick={followOnClick}
+            size="medium"
+            className={classes.followBtn}
+            >
+                {!followState ? "Follow" : "Unfollow" }
+            </Button>
     )
 }

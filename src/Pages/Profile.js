@@ -2,25 +2,21 @@ import React, {useEffect, useState, useContext} from 'react'
 import ProfileHeader from '../Components/Profile/ProfileHeader'
 import Feed from '../Components/Feed'
 import Navbar from '../Components/Navbar'
-import { Grid, makeStyles, Container } from '@material-ui/core'
+import { Grid, makeStyles, Container} from '@material-ui/core'
 import { useHistory, useParams } from 'react-router'
 import AuthContext from '../Context/AuthContext'
 import CreateTweet from '../Components/Tweets/CreateTweet'
 import isAuth from '../utils/useAuth'
 import { Switch, Route, useRouteMatch } from 'react-router'
 import FollowContainer from '../Components/FollowContainer'
-import CircularLoad from '../Components/CircularLoad'
+import CircularLoad from '../Components/Utils/CircularLoad'
 import TweetPage from './TweetPage'
 import UserContext from '../Context/UserContext'
+import SideBar from '../Components/Sidebars/SideBar'
 
 const useStyles = makeStyles( theme => ({
     root: {
-        [theme.breakpoints.up('sm')]: {
-            maxWidth: "75%",
-        },
-        [theme.breakpoints.up('md')]: {
-            maxWidth: "50%",
-        }
+        maxWidth: "100%"
     }
 }));
 
@@ -105,39 +101,52 @@ export default function Profile() {
     return (
     <>
     {user == null ? <CircularLoad/> : 
-            (<Container className={classes.root}>
-            <Grid container direction="column" spacing={0} >
-                <Navbar />
-                <ProfileHeader 
-                    name={user.name} 
-                    username={user.username}
-                    description={user.description}
-                    followers={user.followers}
-                    following={user.following}
-                    followStatus={user.followStatus}
-                    editProfileAPI={editProfileAPI}
-                />
-                <Switch>
-                    <Route exact path={path}>
-                        {auth && <CreateTweet 
-                            content={content} 
-                            updateContent={updateContent}
-                            createTweetAPI={createTweetAPI}
-                            />}
-                        <Feed 
-                            tweetArr={tweetArr}
-                            setTweetArr={setTweetArr}
-                        />
-                    </Route>
-                    <Route exact path={`${path}/status/:tweet_id`}>
-                        <TweetPage />
-                    </Route>
-                    <Route exact path={`${path}/:type`}>
-                        <FollowContainer userForContainer={user.username}/>
-                    </Route>
-                </Switch>
+            (
+        <>
+        <Grid container>
+            <Grid item xs={0} md={3}>
+                <SideBar />
             </Grid>
-        </Container >)}
+            <Grid item xs={12} md={6}>
+                <Container className={classes.root}>
+                    <Grid container direction="column" spacing={0} >
+                        <Navbar />
+                        <ProfileHeader 
+                            name={user.name} 
+                            username={user.username}
+                            description={user.description}
+                            followers={user.followers}
+                            following={user.following}
+                            followStatus={user.followStatus}
+                            editProfileAPI={editProfileAPI}
+                        />
+                        <Switch>
+                            <Route exact path={path}>
+                                {auth && <CreateTweet 
+                                    content={content} 
+                                    updateContent={updateContent}
+                                    createTweetAPI={createTweetAPI}
+                                    />}
+                                <Feed 
+                                    tweetArr={tweetArr}
+                                    setTweetArr={setTweetArr}
+                                />
+                            </Route>
+                            <Route exact path={`${path}/status/:tweet_id`}>
+                                <TweetPage />
+                            </Route>
+                            <Route exact path={`${path}/:type`}>
+                                <FollowContainer userForContainer={user.username}/>
+                            </Route>
+                        </Switch>
+                    </Grid>
+                </Container > 
+            </Grid>
+            <Grid item xs={0} md={3}>
+                
+            </Grid>
+        </Grid>
+        </>)}
     </>
     )
 }

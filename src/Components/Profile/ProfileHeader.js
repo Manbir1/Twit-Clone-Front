@@ -44,7 +44,7 @@ export default function ProfileHeader({name, username, avatar, description, foll
                 <Grid container direction="column" >
                     <Grid container direction="row" justifyContent="space-between">
                         <Grid className={classes.onHover} onClick={onProfileClick}>
-                            <Avatar>H</Avatar>
+                            <Avatar></Avatar>
                         </Grid>
                         <Grid>
                             {auth && 

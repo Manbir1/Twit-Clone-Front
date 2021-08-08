@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Feed from '../Components/Feed'
-import CircularLoad from '../Components/CircularLoad'
+import CircularLoad from '../Components/Utils/CircularLoad'
+import { Grid } from '@material-ui/core'
+import CreateTweet from '../Components/Tweets/CreateTweet'
+import SideBar from '../Components/Sidebars/SideBar'
+import UtilsBar from '../Components/Sidebars/UtilsBar'
 
 export default function Home() {
 
@@ -16,12 +20,23 @@ export default function Home() {
         })()
     },[])
 
-    return <> 
-    {
-        tweetArr==null
-        ? <CircularLoad />
-        : <Feed tweetArr={tweetArr} setTweetArr={setTweetArr}/>
+    return(
+    <Grid container>
+        <Grid item xs={0} md={3}>
+            <SideBar />
+        </Grid>
+        <Grid item xs={12} md={6}>
+            <CreateTweet />
+            {
+                tweetArr==null
+                ? <CircularLoad />
+                : <Feed tweetArr={tweetArr} setTweetArr={setTweetArr}/>
 
-    }
-    </>
+            }
+        </Grid>
+        <Grid item xs={0} md={3}>
+
+        </Grid>
+    </Grid>
+    )
 }

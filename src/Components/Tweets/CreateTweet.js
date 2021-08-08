@@ -9,6 +9,9 @@ const useStyles = makeStyles({
     },
     grid: {
         maxWidth: "100%"
+    },
+    tweetBtn: {
+        borderRadius: "20px"
     }
   });
 
@@ -47,6 +50,7 @@ export default function CreateTweet({content, updateContent, createTweetAPI, but
                                     variant="outlined"
                                     color="primary"
                                     onClick = { (e) => createTweetAPI(e, content, updateContent)}
+                                    className={classes.tweetBtn}
                                 >
                                     {buttonText}
                                 </Button>
