@@ -53,7 +53,7 @@ export default function FollowContainer( {userForContainer} ) {
             </Paper>
             { arr==null 
             ? <CircularLoad />
-            : arr.map(user => <Follow key = {user.id} user={user}/>)
+            : arr.map(user => <Follow key = {user.id} user={user} variant="outlined" color="#FFFFFF" hoverColor="#FAFAFA"/>)
             }
         </>
     )

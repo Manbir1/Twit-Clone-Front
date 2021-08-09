@@ -4,31 +4,32 @@ import FollowButton from './FollowButton';
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
-    root: {
+    root: props => ( {
         minWidth: "95%",
         maxWidth: "100%",
         padding: "10px",
+        backgroundColor: props.backgroundColor,
         '&:hover': {
-            background: "#FAFAFA",
+            background: props.hoverColor,
             cursor: "pointer"
          },
-    },
+    }),
     pushRight: {
         marginLeft: "auto"
     },
   });
 
 
-export default function Follow({ user, size=1}) {
+export default function Follow({ user, size=1, variant, ...props}) {
 
     const history = useHistory()
-    const classes = useStyles()
+    const classes = useStyles(props)
     return (
         <Paper 
             className={classes.root} 
             square 
             elevation={0}
-            variant="outlined"
+            variant={variant}
             onClick={(e) => history.push('/users/'+user.username)}
             >
             <Grid container direction="row">
