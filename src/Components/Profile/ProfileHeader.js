@@ -6,13 +6,24 @@ import FollowButton from '../FollowButton';
 import { useHistory, useRouteMatch } from 'react-router';
 import UserContext from '../../Context/UserContext';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     onHover: {
         "&:hover": {
             cursor: "pointer"
         }
+    },
+
+    avatar: {
+        [theme.breakpoints.up("md")]: {
+            width: theme.spacing(15),
+            height: theme.spacing(15)
+        },
+        [theme.breakpoints.down("sm")]: {
+            width: theme.spacing(10),
+            height: theme.spacing(10)
+        },
     }
-});
+}));
 
 export default function ProfileHeader({name, username, avatar, description, followers, following, editProfileAPI, followStatus}) {
     const { auth } = useContext(AuthContext)
@@ -42,9 +53,11 @@ export default function ProfileHeader({name, username, avatar, description, foll
             <EditProfile open={openEdit} setOpen={setEdit} name={name} username={username} description={description} editProfileAPI={editProfileAPI}/>
             <Box m={3}>
                 <Grid container direction="column" >
-                    <Grid container direction="row" justifyContent="space-between">
+                    <Grid container direction="row" justifyContent="space-between" alignItems="center">
                         <Grid className={classes.onHover} onClick={onProfileClick}>
-                            <Avatar></Avatar>
+                            <Box m={1}>
+                                <Avatar className={classes.avatar}></Avatar>
+                            </Box>
                         </Grid>
                         <Grid>
                             {auth && 
@@ -59,7 +72,7 @@ export default function ProfileHeader({name, username, avatar, description, foll
                         </Grid>
                     </Grid> 
                     <Grid item>
-                        <Typography>
+                        <Typography variant="body1">
                             {name}
                         </Typography>
                         <Typography variant="body1" color="textSecondary"className={classes.onHover} onClick={onProfileClick}>

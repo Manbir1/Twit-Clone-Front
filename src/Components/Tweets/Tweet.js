@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Card, CardHeader, CardContent, Typography, IconButton, CardActions, makeStyles, Box, Grid, Avatar} from '@material-ui/core'
+import { Card, CardHeader, CardContent, CardMedia,Typography, IconButton, CardActions, makeStyles, Box, Grid, Avatar} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -131,6 +131,7 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                             {tweet.content}
                         </Typography>
                     </CardContent>
+                    <CardMedia />
                     <CardActions>
                         <Grid
                             container

@@ -113,7 +113,7 @@ export default function Profile() {
             <Grid item xs={12} sm={6}>
                 <Container className={classes.root}>
                     <Grid container direction="column" spacing={0} >
-                        <Navbar />
+                        <Navbar user={user} tweetNumb={tweetArr.length}/>
                         <ProfileHeader 
                             name={user.name} 
                             username={user.username}
@@ -125,7 +125,7 @@ export default function Profile() {
                         />
                         <Switch>
                             <Route exact path={path}>
-                                {auth && <CreateTweet 
+                                {auth && sessionUserObj.user === user.username && <CreateTweet 
                                     content={content} 
                                     updateContent={updateContent}
                                     createTweetAPI={createTweetAPI}
