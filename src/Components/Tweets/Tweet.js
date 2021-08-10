@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Card, CardHeader, CardContent, CardMedia,Typography, IconButton, CardActions, makeStyles, Box, Grid, Avatar} from '@material-ui/core'
+import { Card, CardHeader, CardContent, CardMedia,Typography, IconButton, CardActions, makeStyles, Box, Grid, Avatar, Divider} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -21,6 +21,10 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         flexWrap: 'wrap',
+    },
+
+    btText: {
+        color: "gray"
     }
   });
 
@@ -38,7 +42,7 @@ tweet = {
 
 */
 
-export default function Tweet({ tweet, id, onDelete = null, likedProp = false, sharedProp = false}) {
+export default function Tweet({ tweet, id, onDelete = null, likedProp = false, sharedProp = false, size = 0}) {
     const classes = useStyles()
     const { auth } = useContext(AuthContext)
     const { user } = useContext(UserContext)
@@ -127,11 +131,29 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                         }
                     />
                     <CardContent>
-                        <Typography>
+                        <Typography variant={size == 0 ? "body1" : "h5"}>
                             {tweet.content}
                         </Typography>
                     </CardContent>
                     <CardMedia />
+                    {size == 1 
+                    ?
+                    <>
+                    <Divider />
+                        <div style={{display: "flex", justifyContent: "flex-start", marginTop: "10px", marginBottom: "10px"}}>
+                            <Box ml={2} mr={2}>
+                                <Typography variant="subtitle1"><strong>{tweet.comments}</strong> Comments</Typography>
+                            </Box>
+                            <Box ml={2} mr={2}>
+                                <Typography variant="subtitle1"><strong>{tweet.shares}</strong> Retweets</Typography>
+                            </Box>
+                            <Box ml={2} mr={2}>
+                                <Typography variant="subtitle1"><strong>{tweet.likes}</strong> Likes</Typography>
+                            </Box>
+                        </div>
+                    <Divider />
+                    </>
+                    : <></>}
                     <CardActions>
                         <Grid
                             container
@@ -140,27 +162,27 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                         >
                             <Grid className={classes.item}>
                                 <IconButton>
-                                    <ChatBubbleIcon fontSize="small"/> 
+                                    <ChatBubbleIcon fontSize={size == 0 ? "small" : "medium"} /> 
                                 </IconButton>
                                 <Typography>
-                                    {tweet.comments}
+                                    {size == 0 && tweet.comments}
                                 </Typography>
                             </Grid>
 
                             <Grid className={classes.item}>
                                 <IconButton>
-                                    <RepeatIcon fontSize="small" onClick={onTweetShare}/>
+                                    <RepeatIcon fontSize={size == 0 ? "small" : "medium"}  onClick={onTweetShare}/>
                                 </IconButton>
                                 <Typography>
-                                    {tweet.shares}
+                                    {size == 0 && tweet.shares}
                                 </Typography>
                             </Grid>
                             <Grid className={classes.item}>
                                 <IconButton onClick={(e) => onTweetLike(e)}>
-                                    { liked ? <FavoriteIcon fontSize="small" color={liked ? "secondary" : ""}/> : <FavoriteBorderIcon fontSize="small" />}
+                                    { liked ? <FavoriteIcon fontSize={size == 0 ? "small" : "medium"} color={liked ? "secondary" : ""}/> : <FavoriteBorderIcon fontSize={size == 0 ? "small" : "medium"} />}
                                 </IconButton> 
                                 <Typography>
-                                    {likes}
+                                    {size == 0 && likes}
                                 </Typography>
                             </Grid>
                         </Grid>

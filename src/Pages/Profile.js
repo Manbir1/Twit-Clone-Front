@@ -105,12 +105,12 @@ export default function Profile() {
             (
         <>
         <Grid container>
-            <Grid item xs={0} sm={3}>
-                <Hidden xsDown>
+            <Grid item xs={0} md={3}>
+                <Hidden smDown>
                     <SideBar />
                 </Hidden>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} md={6}>
                 <Container className={classes.root}>
                     <Grid container direction="column" spacing={0} >
                         <Navbar user={user} tweetNumb={tweetArr.length}/>
@@ -145,7 +145,7 @@ export default function Profile() {
                     </Grid>
                 </Container > 
             </Grid>
-            <Grid item xs={0} sm={3}>
+            <Grid item xs={0} md={3}>
                 <UtilsBar />
             </Grid>
         </Grid>

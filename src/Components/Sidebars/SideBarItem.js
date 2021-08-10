@@ -15,7 +15,7 @@ export default function SideBarItem({ text, icon, action }) {
     const classes = useStyles()
     return (
         <div style={{display: "inline-block",marginTop: "20px"}}>
-            <Button startIcon={icon} className={classes.button}><Typography className={classes.text} variant="body1">{text}</Typography></Button>
+            <Button onClick={action} startIcon={icon} className={classes.button}><Typography className={classes.text} variant="body1">{text}</Typography></Button>
         </div>
     )
 }
