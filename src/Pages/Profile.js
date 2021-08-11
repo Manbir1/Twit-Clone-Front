@@ -104,51 +104,39 @@ export default function Profile() {
     {user == null ? <CircularLoad/> : 
             (
         <>
-        <Grid container>
-            <Grid item xs={0} md={3}>
-                <Hidden smDown>
-                    <SideBar />
-                </Hidden>
-            </Grid>
-            <Grid item xs={12} md={6}>
-                <Container className={classes.root}>
-                    <Grid container direction="column" spacing={0} >
-                        <Navbar user={user} tweetNumb={tweetArr.length}/>
-                        <ProfileHeader 
-                            name={user.name} 
-                            username={user.username}
-                            description={user.description}
-                            followers={user.followers}
-                            following={user.following}
-                            followStatus={user.followStatus}
-                            editProfileAPI={editProfileAPI}
+        <Container className={classes.root}>
+            <Grid container direction="column" spacing={0} >
+                <Navbar user={user} tweetNumb={tweetArr.length}/>
+                <ProfileHeader 
+                    name={user.name} 
+                    username={user.username}
+                    description={user.description}
+                    followers={user.followers}
+                    following={user.following}
+                    followStatus={user.followStatus}
+                    editProfileAPI={editProfileAPI}
+                />
+                <Switch>
+                    <Route exact path={path}>
+                        {auth && sessionUserObj.user === user.username && <CreateTweet 
+                            content={content} 
+                            updateContent={updateContent}
+                            createTweetAPI={createTweetAPI}
+                            />}
+                        <Feed 
+                            tweetArr={tweetArr}
+                            setTweetArr={setTweetArr}
                         />
-                        <Switch>
-                            <Route exact path={path}>
-                                {auth && sessionUserObj.user === user.username && <CreateTweet 
-                                    content={content} 
-                                    updateContent={updateContent}
-                                    createTweetAPI={createTweetAPI}
-                                    />}
-                                <Feed 
-                                    tweetArr={tweetArr}
-                                    setTweetArr={setTweetArr}
-                                />
-                            </Route>
-                            <Route exact path={`${path}/status/:tweet_id`}>
-                                <TweetPage />
-                            </Route>
-                            <Route exact path={`${path}/:type`}>
-                                <FollowContainer userForContainer={user.username}/>
-                            </Route>
-                        </Switch>
-                    </Grid>
-                </Container > 
+                    </Route>
+                    <Route exact path={`${path}/status/:tweet_id`}>
+                        <TweetPage />
+                    </Route>
+                    <Route exact path={`${path}/:type`}>
+                        <FollowContainer userForContainer={user.username}/>
+                    </Route>
+                </Switch>
             </Grid>
-            <Grid item xs={0} md={3}>
-                <UtilsBar />
-            </Grid>
-        </Grid>
+        </Container > 
         </>)}
     </>
     )

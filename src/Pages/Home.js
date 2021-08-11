@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Feed from '../Components/Feed'
 import CircularLoad from '../Components/Utils/CircularLoad'
-import { Grid } from '@material-ui/core'
 import CreateTweet from '../Components/Tweets/CreateTweet'
-import SideBar from '../Components/Sidebars/SideBar'
-import UtilsBar from '../Components/Sidebars/UtilsBar'
-
 export default function Home() {
 
     const [tweetArr, setTweetArr] = useState(null)
@@ -21,11 +17,7 @@ export default function Home() {
     },[])
 
     return(
-    <Grid container>
-        <Grid item xs={0} sm={3}>
-            <SideBar />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        <>
             <CreateTweet />
             {
                 tweetArr==null
@@ -33,10 +25,6 @@ export default function Home() {
                 : <Feed tweetArr={tweetArr} setTweetArr={setTweetArr}/>
 
             }
-        </Grid>
-        <Grid item xs={0} sm={3}>
-
-        </Grid>
-    </Grid>
+        </>
     )
 }

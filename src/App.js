@@ -3,10 +3,10 @@ import Signup from './Pages/SignUp'
 import Home from './Pages/Home';
 import Login from './Pages/Login'
 import Profile from './Pages/Profile.js'
-import NoMatch from './Pages/NoMatch';
-import { CssBaseline } from '@material-ui/core'
+import MainTemp from './Pages/MainTemp';
 import AuthContext from './Context/AuthContext'
 import UserContext from './Context/UserContext';
+import MessagePage from './Pages/MessagePage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -30,7 +30,16 @@ function App() {
       <AuthContext.Provider value={providerValue}>
         <UserContext.Provider value={userProviderValue}>
           <Switch>
-              <Route path="/users/:handle" children={<Profile />} />
+              <Route path="/users/:handle">
+                <MainTemp>
+                  <Profile /> 
+                </MainTemp>
+              </Route>
+              <Route path="/messages">
+                <MainTemp>
+                  <MessagePage />
+                </MainTemp>
+              </Route>
               <Route exact path="/login">
                 <Login />
               </Route>
@@ -38,7 +47,9 @@ function App() {
                 <Signup />
               </Route>
               <Route path="*">
-                <Home />
+                <MainTemp>
+                  <Home />
+                </MainTemp>
               </Route>
             </Switch>
 

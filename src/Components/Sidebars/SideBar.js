@@ -21,7 +21,7 @@ export default function SideBar() {
     }
     
     const messageOnClick = (e) => {
-    
+        history.push('/messages')
     }
     
     const profileOnClick = (e) => {
