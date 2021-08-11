@@ -90,8 +90,8 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                 tweetId: id
             })
         })
-
         const likeRes = (await ret.json()).like
+        console.log(likeRes)
         likeRes ? setLikes(Number(likes)+1) : setLikes(Number(likes)-1)
         setLiked(likeRes)
     }
@@ -148,7 +148,7 @@ export default function Tweet({ tweet, id, onDelete = null, likedProp = false, s
                                 <Typography variant="subtitle1"><strong>{tweet.shares}</strong> Retweets</Typography>
                             </Box>
                             <Box ml={2} mr={2}>
-                                <Typography variant="subtitle1"><strong>{tweet.likes}</strong> Likes</Typography>
+                                <Typography variant="subtitle1"><strong>{likes}</strong> Likes</Typography>
                             </Box>
                         </div>
                     <Divider />

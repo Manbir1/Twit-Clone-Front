@@ -17,13 +17,14 @@ const useStyles = makeStyles({
   });
 
 
-export default function MessageProfile({ name, username }) {
+export default function MessageProfile({ name, username, setPage, id }) {
     const classes = useStyles()
     return (
         <Paper 
             className={classes.root} 
             square 
             elevation={0}
+            onClick={(e) => {setPage(id)}}
             >
             <Grid container direction="row">
                 <Grid item>
@@ -34,12 +35,6 @@ export default function MessageProfile({ name, username }) {
                         <Typography variant="body1" >{name}</Typography>
                         <Typography variant="body2" color="textSecondary">{'@'+username}</Typography>
                     </Box>
-                </Grid>
-                <Grid item className={classes.pushRight}>
-                    
-                </Grid>
-                <Grid item xs={12}>
-
                 </Grid>
             </Grid>
         </Paper>

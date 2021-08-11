@@ -64,9 +64,11 @@ export default function ProfileHeader({name, username, avatar, description, foll
                             <>
                                 { sessionUser != username
                                     ?<FollowButton username={username} follow={followStatus}/>
-                                    :<Button variant="outlined" color="primary" onClick={(e) => setEdit(true)}>Edit Profile</Button>
+                                    :<>
+                                    <Button variant="outlined" color="secondary" onClick={onSignout}>Sign Out</Button>
+                                    <Button variant="outlined" color="primary" onClick={(e) => setEdit(true)}>Edit Profile</Button>
+                                    </>
                                 }
-                                <Button variant="outlined" color="secondary" onClick={onSignout}>Sign Out</Button>
                             </>
                             }
                         </Grid>
